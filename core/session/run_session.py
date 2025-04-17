@@ -4,8 +4,6 @@ import curses
 import time
 
 # Import custom modules
-
-from ui.screens.analytics.interface import AnalyticsInterface
 from ui.screens.results.interface import ResultsInterface
 from ui.screens.session.interface import SessionInterface
 
@@ -50,7 +48,4 @@ def run_typing_session(stdscr: window, time_limit=60, word_source="common"):
     stdscr.nodelay(False)  # Make getch blocking again
 
     # Show basic results first
-    ResultsInterface(stdscr, typing_session)
-
-    # Then show detailed analytics
-    AnalyticsInterface(stdscr, typing_session).show()
+    ResultsInterface(typing_session, stdscr)
