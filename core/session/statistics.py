@@ -2,13 +2,14 @@ class TypingStats:
     """Manages typing statistics and calculations."""
 
     def __init__(self):
+        self.accuracy = 100.0
+        self.consistency = 0
         self.correct_chars = 0
         self.incorrect_chars = 0
         self.wpm = 0
         """Account only for correct characters"""
         self.wpm_raw = 0
         """Account for both correct and incorrect characters"""
-        self.accuracy = 100.0
 
     def update_character_stats(self, input_text, target_text):
         """Update character statistics based on comparison between input and target."""
@@ -57,8 +58,7 @@ class TypingStats:
         # WPM calculation
         self.wpm = word / time_in_minutes
 
-        # Accuracy calculation
-        if word > 0:
+        # Accuracy calculation - Percentage of correctly pressed keys
+        total_keys_pressed = self.correct_chars + self.incorrect_chars
+        if total_keys_pressed > 0.0:
             self.accuracy = (self.correct_chars / word) * 100
-        else:
-            self.accuracy = 100.0

@@ -3,7 +3,6 @@ class KeystrokeRecorder:
 
     def __init__(self):
         self.backspaces = 0
-        self.consistency = 0
         self.keystrokes = []
         self.word_times = []
         self.key_frequency = {}
