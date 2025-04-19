@@ -3,8 +3,8 @@ from _curses import window
 class SessionWords:
     """Draws the words to be typed in the current typing session."""
 
-    def __init__(self, typing_session, stdscr: window, width: int ):
-        self.stdscr = stdscr
+    def __init__(self, typing_session, window: window, width: int ):
+        self.window = window
         self.width = width
 
         self.words_display = ""
@@ -20,4 +20,4 @@ class SessionWords:
                 self.words_display += f" {word} "
 
     def draw(self):
-        self.stdscr.addstr(6, (self.width - len(self.words_display)) // 2, self.words_display[:self.width-1])
+        self.window.addstr(6, (self.width - len(self.words_display)) // 2, self.words_display[:self.width-1])
