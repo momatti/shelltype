@@ -29,7 +29,7 @@ class ResultsInterface:
             f"Total characters: {total_chars}",
             f"Words completed: {typing_session.current_word_index}",
             "",
-            "Press any key to see end this session..."
+            "Press any key to end this session..."
         ]
 
         for i, line in enumerate(result_lines):
