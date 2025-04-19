@@ -43,22 +43,18 @@ class TypingStats:
         if elapsed_time <= 0:
             return
 
-        # Total characters (correct and incorrect)
-        word_raw = (self.correct_chars + self.incorrect_chars) / 5
+        total_chars = self.correct_chars + self.incorrect_chars
+        time_in_minutes = elapsed_time / 60 # Time in minutes
 
-        # Total characters (correct only)
-        word = self.correct_chars / 5
+        word_raw = total_chars / 5    # Total characters (correct and incorrect)
+        word = self.correct_chars / 5 # Total characters (correct only)
 
-        # Time in minutes
-        time_in_minutes = elapsed_time / 60
-
-        # Raw WPM calculation
-        self.wpm_raw = word_raw / time_in_minutes
-
-        # WPM calculation
-        self.wpm = word / time_in_minutes
+        # Update WPM
+        self.wpm_raw = word_raw / time_in_minutes # Raw WPM calculation
+        self.wpm = word / time_in_minutes # WPM calculation
 
         # Accuracy calculation - Percentage of correctly pressed keys
-        total_keys_pressed = self.correct_chars + self.incorrect_chars
-        if total_keys_pressed > 0.0:
+        if total_chars > 0:
             self.accuracy = (self.correct_chars / word) * 100
+        else:
+            self.accuracy = 100.0
