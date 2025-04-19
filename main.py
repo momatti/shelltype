@@ -22,21 +22,21 @@ def main():
     parser.add_argument('-w', '--words', type=str, default="common",
                         choices=['common', 'programming', 'quotes'],
                         help='Word list to use (default: common)')
-    parser.add_argument('--menu', action='store_true',
+    parser.add_argument('-m', '--menu', action='store_true',
                         help='Show the main menu (default behavior)')
     args = parser.parse_args()
 
-    def initialize_curses(stdscr: window):
+    def initialize_curses(window: window):
         curses.start_color()
         curses.use_default_colors()
         curses.curs_set(0)  # Hide cursor
 
-        stdscr.erase()
+        window.erase()
 
         if args.menu:
-            StartInterface(stdscr)
+            StartInterface(window)
         else:
-            run_typing_session(stdscr, args.time, args.words)
+            run_typing_session(window, args.time, args.words)
 
     try:
         curses.wrapper(initialize_curses)
