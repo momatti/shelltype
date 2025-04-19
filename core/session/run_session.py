@@ -9,22 +9,22 @@ from ui.screens.session.interface import SessionInterface
 
 from .typing_session import TypingSession
 
-def run_typing_session(stdscr: window, time_limit=60, word_source="common"):
+def run_typing_session(window: window, time_limit=60, word_source="common"):
     """Run the typing session."""
 
     typing_session = TypingSession(time_limit, word_source)
     typing_session.start()
 
     curses.curs_set(0)  # Hide cursor
-    stdscr.nodelay(True)  # Make getch non-blocking
+    window.nodelay(True)  # Make getch non-blocking
 
     while not typing_session.completed:
         try:
             # Draw interface
-            SessionInterface(typing_session, stdscr)
+            SessionInterface(typing_session, window)
 
             # Get input
-            key = stdscr.getch()
+            key = window.getch()
             if key != -1:  # -1 means no key pressed
                 typing_session.process_key(key)
 
@@ -45,7 +45,12 @@ def run_typing_session(stdscr: window, time_limit=60, word_source="common"):
     typing_session.save_result()
 
     # Show results
-    stdscr.nodelay(False)  # Make getch blocking again
+    window.nodelay(False)  # Make getch blocking again
+    results = ResultsInterface(typing_session, window)
+    restart = results.watch_user_input()
 
-    # Show basic results first
-    ResultsInterface(typing_session, stdscr)
+    if restart == 10:
+        # Restart the session
+        window.clear()
+        window.refresh()
+        run_typing_session(window, time_limit, word_source)
