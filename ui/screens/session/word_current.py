@@ -3,9 +3,9 @@ from _curses import window
 class SessionCurrentWord:
     """Current word display - shows the word being typed in the current session"""
 
-    def __init__(self, typing_session, stdscr: window, width):
+    def __init__(self, typing_session, stdscr: window):
         self.stdscr = stdscr
-        self.width = width
+        self.width = stdscr.getmaxyx()[1]
 
         self.colored_word = ""
 
@@ -24,8 +24,8 @@ class SessionCurrentWord:
                 else:
                     self.colored_word += char
 
-            if len(self.colored_word) > width - 2:
-                self.colored_word = self.colored_word[:width - 5] + "..."
+            if len(self.colored_word) > self.width - 2:
+                self.colored_word = self.colored_word[:self.width - 5] + "..."
 
     def draw(self):
         self.stdscr.addstr(11, (self.width - len(self.colored_word)) // 2, self.colored_word)

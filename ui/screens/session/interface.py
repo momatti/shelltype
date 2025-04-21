@@ -16,15 +16,18 @@ class SessionInterface:
     """Draws the typing session interface."""
 
     def __init__(self, typing_session, stdscr: window ):
-        stdscr.clear()
-        height, width = stdscr.getmaxyx()
+        self.typing_session = typing_session
+        self.stdscr = stdscr
+
+    def draw(self):
+        self.stdscr.clear()
 
         # Draw each interface component
-        SessionHeader(typing_session, stdscr, width).draw()
-        SessionProgressBar(typing_session, stdscr, width).draw()
-        SessionWords(typing_session, stdscr, width).draw()
-        SessionInput(typing_session, stdscr, width).draw()
-        SessionCurrentWord(typing_session, stdscr, width).draw()
-        SessionInstructions(stdscr, width, height).draw()
+        SessionHeader(self.typing_session, self.stdscr).draw()
+        SessionProgressBar(self.typing_session, self.stdscr).draw()
+        SessionWords(self.typing_session, self.stdscr).draw()
+        SessionInput(self.typing_session, self.stdscr).draw()
+        SessionCurrentWord(self.typing_session, self.stdscr).draw()
+        SessionInstructions(self.stdscr).draw()
 
-        stdscr.refresh()
+        self.stdscr.refresh()

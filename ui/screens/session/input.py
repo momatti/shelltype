@@ -3,9 +3,9 @@ from _curses import window
 class SessionInput:
     """Draws the input section for the typing session."""
 
-    def __init__(self, typing_session, stdscr: window, width: int):
+    def __init__(self, typing_session, stdscr: window):
         self.stdscr = stdscr
-        self.width = width
+        self.width = stdscr.getmaxyx()[1]
 
         self.input_display = f"> {typing_session.current_input}"
 

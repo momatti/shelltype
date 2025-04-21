@@ -3,10 +3,9 @@ from _curses import window
 class SessionInstructions:
     """Draws the instructions for the typing session."""
 
-    def __init__(self, window: window, width: int, height: int):
+    def __init__(self, window: window):
         self.window = window
-        self.width = width
-        self.height = height
+        self.height, self.width = window.getmaxyx()
 
     def draw(self):
         """Draws the instructions for the typing session."""
