@@ -14,6 +14,7 @@ import argparse
 from ui.screens.start import StartInterface
 from core.session.run_session import run_typing_session
 
+
 def main():
     """Parse command line arguments and start the application."""
     parser = argparse.ArgumentParser(description='Terminal Typing Test')
@@ -26,22 +27,31 @@ def main():
                         help='Show the main menu (default behavior)')
     args = parser.parse_args()
 
-    def initialize_curses(window: window):
-        curses.start_color()
+    def initialize_curses(stdscr: window):
+        """Initialize curses and set up color pairs."""
         curses.use_default_colors()
-        curses.curs_set(0)  # Hide cursor
+        curses.init_pair(1, curses.COLOR_YELLOW,
+                         curses.COLOR_BLACK)  # CURRENT character
+        curses.init_pair(2, curses.COLOR_GREEN,
+                         curses.COLOR_BLACK)  # CORRECT character
+        # INCORRECT character
+        curses.init_pair(3, curses.COLOR_RED, curses.COLOR_BLACK)
 
-        window.erase()
+        curses.curs_set(0)  # Hide cursor
+        stdscr.nodelay(True)  # Make getch non-blocking
+
+        stdscr.clear() # Start with a clear screen
 
         if args.menu:
-            StartInterface(window)
+            StartInterface(stdscr).draw()
         else:
-            run_typing_session(window, args.time, args.words)
+            run_typing_session(stdscr, args.time, args.words)
 
     try:
         curses.wrapper(initialize_curses)
     except KeyboardInterrupt:
-        print("Typing session terminated.")
+        print("Shelltyping session finished.")
+
 
 if __name__ == "__main__":
     main()

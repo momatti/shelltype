@@ -1,0 +1,2 @@
+PADDING_Y = 2
+PADDING_X = 4
